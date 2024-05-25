@@ -22,3 +22,7 @@ Here are some screenshots of the Studydrive Downloader in action:
 3. Paste the URL into the input field on the Studydrive Downloader website.
 4. Click the "Download" button.
 5. The website will fetch and download the document for you.
+
+## Note on `studydrive_downloader.py`
+
+Please be aware that the `studydrive_downloader.py` file is intentionally not included in this repository. This is to prevent the developers of Studydrive from identifying and fixing the exploit that this tool uses to download documents.
