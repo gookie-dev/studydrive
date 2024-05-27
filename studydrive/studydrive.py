@@ -1,4 +1,6 @@
 import asyncio
+import os
+
 import reflex as rx
 from rxconfig import config
 from fastapi import Response
@@ -208,7 +210,7 @@ def document() -> rx.Component:
                 rx.cond(
                     DocumentState.preview,
                     rx.card(
-                        rx.image(src=f"/preview/{DocumentState.id}.png",
+                        rx.image(src=f"/download/preview/{DocumentState.id}",
                                  width="100%",
                                  background="#FFF"
                                  ),
@@ -231,6 +233,14 @@ async def download_endpoint(download_id: str, file_name: str) -> Response:
     if file:
         return FileResponse(path=f"./cache/{file}.pdf", filename=file_name)
     return Response(content="Download not found or expired.", status_code=404)
+
+
+async def download_preview_endpoint(file_name: str) -> Response:
+    file_path = f"./assets/preview/{file_name}.png"
+    if os.path.isfile(file_path):
+        return FileResponse(path=file_path, filename=f"{file_name}.png")
+    else:
+        return Response(content="File not found.", status_code=404)
 
 
 # Components
@@ -279,4 +289,5 @@ app = rx.App(
     ),
     stylesheets=["/styles.css"]
 )
+app.api.add_api_route("/preview/{file_name}", download_preview_endpoint)
 app.api.add_api_route("/{download_id}/{file_name}", download_endpoint)
