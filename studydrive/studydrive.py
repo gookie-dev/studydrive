@@ -203,6 +203,7 @@ def document() -> rx.Component:
                             padding_top="0rem"
                         ),
                         width="100%",
+                        max_width="100%",
                         padding="1rem"
                     ),
                 ),
